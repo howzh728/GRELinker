@@ -14,7 +14,7 @@ Create a new conda environment:
 
 ```bash
 conda env create -f environment.yml
-conda activate GRELinker
+conda activate GRELinker-env
 ```
 
 ## Pre-processing 
