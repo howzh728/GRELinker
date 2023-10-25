@@ -1,0 +1,200 @@
+{
+    "version": 3,
+    "run_type": "curriculum_learning",
+    "model_type": "default",
+    "logging": {
+        "sender": "http://0.0.0.1",
+        "recipient": "local",
+        "logging_frequency": 100,
+        "logging_path": "path",
+        "result_folder": "path",
+        "job_name": "Automated Curriculum Learning Demo",
+        "job_id": "Demo"
+    },
+    "parameters": {
+        "prior": "path",
+        "agent": "path",
+        "curriculum_type": "automated",
+        "curriculum_strategy": {
+            "name": "user_defined",
+            "max_num_iterations": 1500,
+            "batch_size": 128,
+            "learning_rate": 0.0001,
+            "sigma": 128,
+            "learning_strategy": {
+                "name": "dap_single_query",
+                "parameters": {
+                    "sigma": 120
+                }
+            },
+            "diversity_filter": {
+                "name": "NoFilter",
+                "bucket_size": 25,
+                "minscore": 0.4,
+                "minsimilarity": 0.4
+            },
+            "inception": {
+                "smiles": [],
+                "memory_size": 100,
+                "sample_size": 10
+            },
+            "curriculum_objectives": [
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "Pyrimidine",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.5
+                },
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "H-Bonding Ring",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.6
+                },
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "H-Bonding Ring with Phenyl",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.6
+                },
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "Double Ring",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.6
+                },
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "Triple Ring",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.6
+                },
+                {
+                    "scoring_function": {
+                        "name": "custom_product",
+                        "parallel": false,
+                        "parameters": [
+                            {
+                                "component_type": "matching_substructure",
+                                "name": "Full Substructure",
+                                "specific_parameters": {
+                                    "smiles": [
+                                        "your smiles"
+                                    ]
+                                },
+                                "weight": 1
+                            }
+                        ]
+                    },
+                    "score_threshold": 0.6
+                }
+            ]
+        },
+        "production_strategy": {
+            "name": "standard",
+            "retain_inception": true,
+            "number_of_steps": 100,
+            "batch_size": 128,
+            "learning_rate": 0.0001,
+            "sigma": 128,
+            "learning_strategy": {
+                "name": "dap_single_query",
+                "parameters": {
+                    "sigma": 120
+                }
+            },
+            "diversity_filter": {
+                "name": "NoFilter",
+                "bucket_size": 25,
+                "minscore": 0.4,
+                "minsimilarity": 0.4
+            },
+            "inception": {
+                "smiles": [],
+                "memory_size": 100,
+                "sample_size": 10
+            },
+            "scoring_function": {
+                "name": "custom_product",
+                "parallel": false,
+                "parameters": [
+                    {
+                        "component_type": "matching_substructure",
+                        "name": "Full Substructure",
+                        "specific_parameters": {
+                            "smiles": [
+                                "your smiles"
+                            ]
+                        },
+                        "weight": 1
+                    }
+                ]
+            }
+        }
+    }
+}

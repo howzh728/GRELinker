@@ -1,0 +1,73 @@
+{
+  "docking": {
+    "header": {
+      "environment": {}
+    },
+    "ligand_preparation": {
+      "embedding_pools": [
+        {
+          "pool_id": "Ligprep_pool",
+          "type": "Ligprep",
+          "parameters": {
+            "prefix_execution": "module load schrodinger",
+            "parallelization": {
+              "number_cores": 2
+            },
+            "use_epik": {
+              "target_pH": 7.0,
+              "pH_tolerance": 2.0
+            },
+            "force_field": "OPLS3e"
+          },
+          "input": {
+            "standardize_smiles": false,
+            "input_path": "path/ligands_smiles.txt",
+            "type": "smi"
+          },
+          "output": {
+            "conformer_path": "path/ligprep_embedded_ligands.sdf",
+            "format": "sdf"
+          }
+        }
+      ]
+    },
+    "docking_runs": [
+      {
+        "backend": "Glide",
+        "run_id": "Glide_run",
+        "input_pools": [
+          "Ligprep_pool"
+        ],
+        "parameters": {
+          "prefix_execution": "module load schrodinger",
+          "parallelization": {
+            "number_cores": 2
+          },
+          "glide_flags": {
+            "-HOST": "localhost"
+          },
+          "glide_keywords": {
+            "AMIDE_MODE": "trans",
+            "EXPANDED_SAMPLING": "True",
+            "GRIDFILE": "path/1UYD_grid.zip",
+            "NENHANCED_SAMPLING": "2",
+            "POSE_OUTTYPE": "ligandlib_sd",
+            "POSES_PER_LIG": "3",
+            "POSTDOCK_NPOSE": "15",
+            "POSTDOCKSTRAIN": "True",
+            "PRECISION": "HTVS",
+            "REWARD_INTRA_HBONDS": "True"
+          }
+        },
+        "output": {
+          "poses": {
+            "poses_path": "path/Glide_docked_ligands.sdf"
+          },
+          "scores": {
+            "scores_path": "path/Glide_scores.csv"
+          }
+        }
+      }
+    ]
+  }
+}
