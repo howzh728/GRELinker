@@ -109,7 +109,7 @@ class Model(nn.Module):
             generated_edges = torch.tensor(generated_edges).to(torch.device("cuda"))
        
 
-        # connect_out = self.connect_model(generated_nodes,generated_edges)
+       
         connect_out,_,_ = self.connect_model(linker_nodes,linker_edges)
         _,two_idx = torch.topk(connect_out, k=2, dim=1, largest=True)
        
@@ -164,10 +164,7 @@ class Model(nn.Module):
                         final_connect_mol = Chem.MolFromSmiles(final_smi)
                         
                     final_connect_smi = Chem.MolToSmiles(final_connect_mol)
-                    print(final_connect_smi)     
-
-                
-
+                       
                     #calculate their tanimoto similarities
                     k=0.8
                     ground_truth_smi = ground_truth_list[id]
@@ -177,16 +174,10 @@ class Model(nn.Module):
                     tanimoto_score = DataStructs.TanimotoSimilarity(query_fp, fp)
                     tanimoto_loss =1 - (min(tanimoto_score, k) / k)
                     tanimoto_loss_list.append(tanimoto_loss)
-
                 except:
-                    pass
                     print('error')
                     tanimoto_loss_list.append(1)
             tanimoto_tensor = torch.tensor(tanimoto_loss_list).to(torch.device("cuda"))
-        
-
-
-            
         else:
             tanimoto_tensor=torch.tensor(1)
         return apd_output,tanimoto_tensor,two_idx
